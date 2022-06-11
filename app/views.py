@@ -9,13 +9,13 @@ from .serializer import ProjectSerializer
 
 class AddProject(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'project_list.html'
+    template_name = 'projects/project_list.html'
 
     def get(self, request, format=None):
         allProjects = Project.objects.all()
         serializer = ProjectSerializer(allProjects, many=True)
         # return Response(serializers.data)
-        return Response({'serializer': serializer,'allProjects':allProjects})
+        return Response(serializer,{'allProjects':allProjects})
 
     
 class ProjectList(APIView):
