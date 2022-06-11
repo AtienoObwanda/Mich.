@@ -63,4 +63,34 @@ class AddProject(APIView):
 
         return HttpResponseRedirect('') # Configure to return the auther profile
 
-  
+class UpdatePoject(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'projects/update_project.html'
+
+    def get(self, request, pk):
+        project = get_object_or_404(Project, pk=pk)
+        serializer = ProjectSerializer(project)
+        return Response({'serializer': serializer, 'project': project})
+
+    def put(self, request, pk):
+        profile = get_object_or_404(Project, pk=pk)
+        serializer = ProjectSerializer(profile, data=request.data)
+        if not serializer.is_valid():
+            return Response({'serializer': serializer, 'profile': profile})
+        serializer.save()
+        return HttpResponseRedirect('project')
+
+
+class DeleteProject(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'projects/delete_project.html'
+
+    def get(self, request, pk):
+        project = get_object_or_404(Project, pk=pk)
+        serializer = ProjectSerializer(project)
+        return Response({'serializer': serializer, 'project': project})
+    
+    def delete(self, request, pk):
+        profile = get_object_or_404(Project, pk=pk)
+        profile.delete()
+        return HttpResponseRedirect('') #  Configure to return the auther profile
