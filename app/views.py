@@ -7,26 +7,24 @@ from rest_framework import status
 from .models import *
 from .serializer import ProjectSerializer
 
-class AddProject(APIView):
+class AllProjectList(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'projects/project_list.html'
 
     def get(self, request, format=None):
-        allProjects = Project.objects.all()
-        serializer = ProjectSerializer(allProjects, many=True)
+        projects = Project.objects.all()
+        # serializer = ProjectSerializer(projects, many=True)
         # return Response(serializers.data)
-        return Response(serializer,{'allProjects':allProjects})
+        return Response({'projects':projects})
 
     
 class ProjectList(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'project_list.html'
 
     def get(self, request, format=None):
-        allProjects = Project.objects.all()
-        serializers = ProjectSerializer(allProjects, many=True)
+        projects = Project.objects.all()
+        serializers = ProjectSerializer(projects, many=True)
         return Response(serializers.data)
-        return Response({'allProjects':allProjects})
 
     def post(self, request, format=None):
         serializers = ProjectSerializer(data=request.data)
