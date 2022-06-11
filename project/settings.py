@@ -15,8 +15,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 import os
-from decouple import config,Csv
-
+# from decouple import config,Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +30,7 @@ SECRET_KEY = 'django-insecure-^l=!ac-!%yooffvwp9gp_rn@k_76(c)u7z*1!_)kv354(zw%bm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -84,8 +83,14 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mich',
+        'USER': 'atieno',
+        'PASSWORD': 'mishi',
+        'HOST':'localhost',
+        'PORT':''
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -121,9 +126,9 @@ USE_I18N = True
 USE_TZ = True
 
 cloudinary.config( 
-  cloud_name = config("cloud_api_name") 
-  api_key = config("cloud_api_key"), 
-  api_secret =( "cloud_api_secret") 
+  cloud_name = ("cloud_api_name"), 
+  api_key = ("cloud_api_key"), 
+  api_secret = ("cloud_api_secret")
 )
 
 #  Email
