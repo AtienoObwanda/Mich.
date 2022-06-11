@@ -15,10 +15,9 @@ import environ
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-from decouple import config,Csv
-# Setting up env 
-env = environ.Env()
-environ.Env.read_env()
+# from decouple import config,Csv
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,12 +29,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-=$f@1y^w1fb6%go0fji1*w)z#(jlv_58jv(l*g&wztb%o=l*kw'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING:
 DEBUG = True
 
-# ALLOWED_HOSTS = []
-
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -128,11 +125,14 @@ USE_I18N = True
 
 USE_TZ = True
 
+
 cloudinary.config( 
-  cloud_name = env('CLOUD_API_NAME'), 
-  api_key = env('CLOUD_API_KEY'), 
-  api_secret = env('CLOUD_API_SECRET'),
+  cloud_name = os.getenv('CLOUD_API_NAME'), 
+  api_key = os.getenv('API_KEY'), 
+  api_secret = os.getenv('CLOUD_API_SECRET'),
 )
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
