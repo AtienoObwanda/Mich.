@@ -1,3 +1,3 @@
-$('.navbar').affix({
+$('.mainNav').affix({
     offset: {top: 100}
   });
