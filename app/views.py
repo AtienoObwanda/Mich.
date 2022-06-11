@@ -10,7 +10,7 @@ from .serializer import ProjectSerializer
 
 class AllProjectList(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'project_list.html'
+    template_name = 'projects/project_list.html'
 
     def get(self, request, format=None):
         projects = Project.objects.all()
@@ -18,7 +18,7 @@ class AllProjectList(APIView):
 
 class ProjectDetailList(APIView):
     renderer_classes= [TemplateHTMLRenderer]
-    template_name='project_detail.html'
+    template_name='projects/project_detail.html'
 
     def get(self, request, pk):
         project = get_object_or_404(Project, pk=pk)
@@ -29,7 +29,6 @@ class ProjectDetailList(APIView):
 
     
 class ProjectList(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
 
     def get(self, request, format=None):
         projects = Project.objects.all()
