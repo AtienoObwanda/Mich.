@@ -1,0 +1,64 @@
+
+.box-ukraine {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    left: 0;
+    height: 50px;
+    background-color: black;
+    font-size: 17px;
+    color: white;
+}
+.box-ukraine:hover {
+    color: white;
+}
+.box-ukraine svg {
+    margin: 0 10px;
+}
+.box-ukraine span {
+    width: 142px;
+}
+
+
+  .above-nav2 {
+    height: 50px;
+    }
+  
+  
+    .above-nav2  p {
+      color: rgba(0, 0, 0, 0.337);
+      font-size: 20px;
+      padding: 0;
+    }
+  
+
+.affix {
+  top: 0px;
+  width: 100%;
+}
+
+.navbar {
+  border-radius: 0;
+}
+
+.carousel-item {
+  height: 150vh;
+  min-height: 350px;
+  background: no-repeat center center scroll;
+  /* -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover; */
+  background-size: cover;
+}
+
+
+
+.display-4{
+	font-family: 'Source Serif Pro', serif;
+  text-align: center;
+}
+
+.lead{
+	font-family: 'Source Serif Pro', serif;
+}
