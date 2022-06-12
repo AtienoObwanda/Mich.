@@ -36,7 +36,7 @@ class LoginUser(APIView):
             'iat' : datetime.datetime.utcnow()
         }
 
-        token = jwt.encode(payload, 'secret', algorithm='HS256') 
+        token = jwt.encode(payload, 'secret', algorithms='HS256') 
         
         response = Response()
 
@@ -56,7 +56,7 @@ class ProfileView(APIView):
             raise AuthenticationFailed('Invalid Session!')
 
         try:
-            payload = jwt.decode(token, 'secret', algorithm=['HS256'])
+            payload = jwt.decode(token, 'secret', algorithms = ['HS256'])
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('Session expired!')
             
@@ -69,6 +69,7 @@ class LogoutView(APIView):
     def post(self, request):
         response = Response()
         response.delete_cookie(jwt)
+        
         response.data = {
             'message' : 'success'
         }
