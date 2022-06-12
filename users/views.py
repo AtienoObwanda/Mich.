@@ -4,11 +4,20 @@ from rest_framework.views import APIView
 from rest_framework.response import Response    
 from rest_framework.exceptions import AuthenticationFailed
 import jwt, datetime
+from rest_framework.renderers import TemplateHTMLRenderer
+
 
 from .serializers import *
 
 
 class RegisterUser(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'register_user.html'
+    model = User
+    def get(self, request):
+        serializer = UserSerializer()
+        return Response({'serializer': serializer})
+
     def post(self,request):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -17,6 +26,13 @@ class RegisterUser(APIView):
 
 
 class LoginUser(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'login_user.html'
+    model = User
+    def get(self, request):
+        serializer = UserSerializer()
+        return Response({'serializer': serializer})
+
     def post (self, request):
         email = request.data['email']
         password = request.data['password']
@@ -50,6 +66,9 @@ class LoginUser(APIView):
 
 
 class ProfileView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'profile_view.html'
+
     def get(self, request):
         token = request.COOKIES.get('jwt')
         if not token:
