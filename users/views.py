@@ -1,5 +1,5 @@
 from re import A
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from rest_framework.views import APIView
 from rest_framework.response import Response    
 from rest_framework.exceptions import AuthenticationFailed
@@ -22,7 +22,8 @@ class RegisterUser(APIView):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data)
+        # return Response(serializer.data)
+        return redirect('login')
 
 
 class LoginUser(APIView):

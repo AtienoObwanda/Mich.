@@ -1,1 +1,8 @@
-<h1>REG</h1>
+{% load rest_framework %}
+
+<h1>REGISTER</h1>
+<form action="{% url 'register' %}" method="POST">
+    {% csrf_token %}
+    {% render_form serializer %}
+    <input type="submit" value="Sign Up">
+</form>

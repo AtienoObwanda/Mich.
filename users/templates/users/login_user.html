@@ -1,1 +1,9 @@
+
+{% load rest_framework %}
+
 <h1>LOGIN</h1>
+<form action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+    {% render_form serializer %}
+    <input type="submit" value="Login">
+</form>
