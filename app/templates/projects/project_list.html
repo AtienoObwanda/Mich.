@@ -80,7 +80,7 @@
   
   <div class="nav-wrapper" style="height:51px;"> <!-- Prevents content jump when navbar becomes fixed -->
   <nav class="navbar navbar-inverse mainNav" role="navigation">
-    <div class="container">
+    <div class="container-fluid">
     <div class="col-sm-2 col-md-2 navbar-right"></div>
     <div class="col-sm-8 col-md-8 navbar-left">
         <div class="navbar-header">
@@ -89,16 +89,18 @@
             </a>
           </div>
     </div>
-    <div class="col-sm-2 col-md-2 navbar-right"></div>
-     
+    <div class="col-sm-2 col-md-2 navbar-right">
+      <a class="navbar-logo" href="{% url 'register' %}"  class="text-center" style="color:black;" >REGISTER</a> /
+      <a class="navbar-logo" href="{% url 'login' %}" class="text-center" style="color:black;">LOG IN</a>
       
-    </div>
+    </div>     
+  </div>
   </nav>
   </div>
 
   <div id="indicators" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner" role="listbox">
-     <div class="carousel-item active" style="background-image: url('https://images.unsplash.com/photo-1425421669292-0c3da3b8f529?ixlib=rb-1.2.1&auto=format&fit=crop&w=749&q=80')">
+     <div class="carousel-item active" style="background-image: url('https://assets.awwwards.com/awards/sites_of_the_day/2022/06/Sarah-Fatmi-cover.jpg')">
         <div class="carousel-caption d-none d-md-block">
           <h2 class="display-5">MICH.</h2>
           <p class="para">The awards of design, creativity and innovation on the internet
@@ -107,38 +109,69 @@
       </div>
     </div>
 </div>
+<section class="py-5">
+  <div class="container">
+    <h1 class="display4">Sites of the day</h1>
+  </div>
+  </section>
 
+</div>
+        <div class="album py-5 bg-light">
+          <div class="container">
+      
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+              {% for project in projects %}
+              <div class="col">
+                <div class="card shadow-sm">
+                  <a href="{% url 'projectDetail' project.pk %}" style="text-decoration: none;">
+                    <img src="{{project.projectImage.url}}" class="img-responsive" alt="..."  style="width:100%; height:200px;" >
+                  </a>       
+                  <div class="card-body">
+                    <p class="card-text">{{project.projectName}}</p>
+                    <p class="card-text">Country</p>
 
-<div class="album py-5 bg-light">
-    <div class="container">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <small class="hideHover" > <a href="{% url 'projectDetail' project.pk %}" style="text-decoration: none; color: #ee4723; font-size: 14px; font-weight: bold">View</a></small>
+                        <!-- <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
+                      </div>
+                      <small class="text-muted">{{project.uploadDate|date}}</small>
+                    </div>
+                  </div>
+                  <div class="card-footer" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+                    img By {{project.projectOwner}}
+                  </div>
 
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for project in projects %}
-
-        <div class="col mb-4" >
-          <div class="card shadow-sm showHover">
-            <a href="{% url 'projectDetail' project.pk %}" style="text-decoration: none;">
-              <img src="{{project.projectImage.url}}" class="img-responsive" alt="..."  style="width:100%; height:400px;" >
-            </a> 
-
-            <div class="card-body" style="margin-top: -3.7em;">
-              <div class="d-flex justify-content-between align-items-center">
-              
-                  <small class="hideHover" > <a href="{% url 'projectDetail' project.pk %}" style="text-decoration: none; color: #ee4723; font-size: 14px; font-weight: bold">View</a></small>
-
-                  <!-- <button type="button" class="btn btn-primary hideHover" data-bs-toggle="modal" data-bs-target="#exampleModal{{image.id}}" style="font-size: 12px; font-weight: bold; background-color: transparent; border:transparent; color:#ee4823ae">
-                    Expand
-                  </button> -->
                 </div>
-            </div>
-          </div>
-        </div>
+              </div>
+              {% endfor %}
 
-        {% endfor %}
+              </div>
+              </div>
+              </div>
+              
 
-        </div>
-        </div>
-        </div> 
+
+              <div class="container">
+                <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+                  <div class="col-md-4 d-flex align-items-center">
+                    <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                      <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+                    </a>
+                    <span class="mb-3 mb-md-0 text-muted">&copy; 2022 Mich.</span>
+                    
+       </div>
+              
+                  <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                  <li class="ml-2"> Contact Us </li>
+                  <li class="ml-2"> Cookies Policy </li> 
+                  <li class="ml-2"></li>
+                  <li class="ml-2"> F.A.Q </li>
+                  <li class="ml-2"> Legal Terms </li>
+                  </ul>
+                </footer>
+              </div>
 </body>
 </html>
 
