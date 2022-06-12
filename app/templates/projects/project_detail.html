@@ -2,7 +2,34 @@
 {% load static %}
 {% load rest_framework %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'projects/project.css' %}">
 
-{{project.projectName}}
+
+<div class="carousel-inner mb-5" role="listbox">
+    <div class="carouselItem active image" style="background-image: url('{{project.projectImage.url}}')">
+      <div class="carousel-caption d-none d-md-block">
+        
+      </div>
+    </div>
+    </div>
+<div class="container mb-5 mt-5">
+    <h3 class="display-4">{{project.projectName}}</h3>
+    <p class="lead text-center">{{project.projectDescription}}</p>
+    <p class="lead">Rate Average</p>
+
+
+</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-8" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                votes
+            </div>
+            <div class="col-3 ml-5" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                comments
+            </div>
+        </div>
+    </div>
+
+
 
 {% endblock content%}
