@@ -75,3 +75,31 @@ class Comment(models.Model):
     def get_comments(cls,id):
             comments = cls.objects.filter(project_id=id)
             return comments     
+
+
+class Review(models.Model):
+    REVIEW = (
+        (1,'1'),
+        (2,'2'),
+        (3,'3'),
+        (4,'4'),
+        (5,'5'),
+        (6,'6'),
+        (7,'7'),
+        (8,'8'),
+        (9,'9'),
+        (10,'10'))
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    design = models.IntegerField(default=0, choices=REVIEW, null=True)
+    usability = models.IntegerField(default=0, choices=REVIEW, null=True)
+    content = models.IntegerField(default=0, choices=REVIEW, null=True)
+
+    def __str__(self):
+        return self.project
+
+    def save_rating(self):
+        self.save()
+
+    def delete_rating(self):
+        self.delete()
