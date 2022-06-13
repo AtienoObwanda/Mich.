@@ -48,8 +48,7 @@ class Project(models.Model):
     @classmethod
     def searchProject(cls, search_term):
         projectResults = Project.objects.filter(sitename__icontains=search_term)
-
-    
+        return projectResults
 
 
 
