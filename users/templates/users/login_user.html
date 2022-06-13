@@ -1,9 +1,23 @@
-
+{% load static %}
 {% load rest_framework %}
+<link rel="stylesheet" type="text/css" href="{% static 'projects/project.css' %}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-<h1>LOGIN</h1>
-<form action="{% url 'login' %}" method="POST">
-    {% csrf_token %}
-    {% render_form serializer %}
-    <input type="submit" value="Login">
-</form>
+<div class="userBg">
+        <div class="container">
+            <div class="row">
+                <div class="col-4"></div>
+        <div class="col-4">
+            <h1>LOGIN</h1>
+        <form action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+            {% render_form serializer template_pack='rest_framework/vertical' %}
+            <input type="submit" value="Sign Up">
+        </form>
+                </div>
+        <div class="col-4"></div>
+            </div>
+        </div>
+        
+  
+</div>

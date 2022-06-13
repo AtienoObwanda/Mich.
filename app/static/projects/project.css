@@ -1,0 +1,6 @@
+.userBg{
+    background-image: url('{% static "images/1.jpg" %}');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+}
