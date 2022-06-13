@@ -36,3 +36,11 @@ class AllProjectList(APIView):
         projects = Project.objects.all()
         return Response({'projects':projects})
 
+
+class ProjectDetailList(APIView):
+    renderer_classes= [TemplateHTMLRenderer]
+    template_name='projects/project_detail.html'
+
+    def get(self, request, pk):
+        project = get_object_or_404(Project, pk=pk)
+        return Response({'project': project})

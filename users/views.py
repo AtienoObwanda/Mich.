@@ -106,17 +106,10 @@ class LogoutView(APIView):
 
 # project related views
 
-class ProjectDetailList(APIView):
-    renderer_classes= [TemplateHTMLRenderer]
-    template_name='projects/project_detail.html'
-
-    def get(self, request, pk):
-        project = get_object_or_404(Project, pk=pk)
-        return Response({'project': project})
 
 class AddProject(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'add_project.html'
+    template_name = 'projects/add_project.html'
     model = Project
     def get(self, request):
         serializer = ProjectSerializer()
