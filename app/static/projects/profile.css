@@ -1,7 +1,7 @@
 .round-image{
     width: 100px;
     height: 100px;
-    border: 2px solid red;
+    border: 2px solid #ee4723;
     border-radius: 50%;
     display: flex;
     justify-content: center;
