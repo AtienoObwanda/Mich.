@@ -175,7 +175,7 @@ class EditProfile(APIView):
         serializer = ProfileSerializer()
         return Response({'serializer': serializer})
 
-    def post(self, request, format=None):
+    def put(self, request, format=None):
         # project = get_object_or_404(Project, pk=pk)
         serializer = ProfileSerializer(data = request.data)
         if not serializer.is_valid():
