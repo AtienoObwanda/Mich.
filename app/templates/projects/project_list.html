@@ -18,6 +18,8 @@
     
     <!--CSS -->
      <link rel="stylesheet" type="text/css" href="{% static 'projects/main.css' %}">
+     <link rel="stylesheet" type="text/css" href="{% static 'projects/project.css' %}">
+
 
     <title>Mich- Website Awards - Web Design Trends</title>
     
@@ -116,13 +118,13 @@
   </section>
 
 </div>
-        <div class="album py-5 bg-light">
+        <div class="album py-5">
           <div class="container">
       
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
               {% for project in projects %}
-              <div class="col-4 mb-5 projectCard">
-                <div class="card shadow-sm">
+              <div class="col-4 mb-5">
+                <div class="card shadow-sm projectCard">
                   <a href="{% url 'projectDetail' project.pk %}" style="text-decoration: none;">
                     <img src="{{project.projectImage.url}}" class="img-responsive" alt="..."  style="width:100%; height:200px;" >
                   </a>       
