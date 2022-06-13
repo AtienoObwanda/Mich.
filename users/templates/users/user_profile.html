@@ -33,7 +33,7 @@
       <p class="content">{{profile.bio}}</p>
 
       <span class="text-muted content">Location: {{profile.country}}</span> <br />
-      <small class="content" > <a href="#" style="text-decoration: none; color: #ee4723; font-size: 10px; font-weight: bold">Edit Profile</a></small>
+      <small class="content" > <a href="{% url 'editProfile' user.profile.pk %}" style="text-decoration: none; color: #ee4723; font-size: 10px; font-weight: bold">Edit Profile</a></small>
 
     </div>
   </div>

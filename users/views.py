@@ -178,19 +178,33 @@ class UserProfile(APIView):
         serializer = ProfileSerializer()
         return Response({'serializer': serializer, 'profile':profile, 'user':user, 'projects':projects})
 
-    def put(self, request, format=None):
-        # project = get_object_or_404(Project, pk=pk)
+
+
+
+
+class EditProfile(APIView):
+
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'users/update_profile.html'
+    parser_classes = [JSONParser,FormParser,MultiPartParser]
+
+    model = Profile
+    def get(self, request,pk):
+        profile = Profile.objects.get(pk=pk)
+        # user = get_object_or_404(User, pk=pk)
+        user = profile.user
+        projects = Project.objects.filter(projectOwner=user).order_by('-uploadDate')
+        serializer = ProfileSerializer()
+        return Response({'serializer': serializer, 'profile':profile, 'user':user, 'projects':projects})
+
+    def post(self, request, pk,format=None):
+        profile = Profile.objects.get(pk=pk)
         serializer = ProfileSerializer(data = request.data)
         if not serializer.is_valid():
             return Response({'serializer': serializer})
         serializer.save()
 
-        return HttpResponseRedirect('projects') # Configure to return the auther profile
-
-
-
-
-
+        return HttpResponseRedirect('profile',pk) # Configure to return the auther profile
 
 
 
