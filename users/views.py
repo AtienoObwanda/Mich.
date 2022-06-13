@@ -9,10 +9,9 @@ from django.http import HttpResponseRedirect
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 
 from .serializers import *
+
 from app.models import *
-from app.serializer import ProjectSerializer #, AddProjectSerializer
-
-
+from app.serializer import ProjectSerializer, CommentSerializer, ReviewSerializer
 
 
 
@@ -126,7 +125,7 @@ class AddProject(APIView):
             return Response({'serializer': serializer})
         serializer.save()
 
-        return HttpResponseRedirect('projects') # Configure to return the auther profile
+        return redirect('projects') # Configure to return the auther profile
 
 class UpdatePoject(APIView):
     renderer_classes = [TemplateHTMLRenderer]
@@ -138,12 +137,12 @@ class UpdatePoject(APIView):
         return Response({'serializer': serializer, 'project': project})
 
     def put(self, request, pk):
-        profile = get_object_or_404(Project, pk=pk)
-        serializer = ProjectSerializer(profile, data=request.data)
+        project = get_object_or_404(Project, pk=pk)
+        serializer = ProjectSerializer(project, data=request.data)
         if not serializer.is_valid():
             return Response({'serializer': serializer, 'profile': profile})
         serializer.save()
-        return HttpResponseRedirect('project')
+        return redirect('project')
 
 
 class DeleteProject(APIView):
@@ -158,7 +157,7 @@ class DeleteProject(APIView):
     def delete(self, request, pk):
         profile = get_object_or_404(Project, pk=pk)
         profile.delete()
-        return HttpResponseRedirect('') #  Configure to return the auther profile
+        return redirect('projects') #  Configure to return the auther profile
 
 
 
@@ -204,12 +203,28 @@ class EditProfile(APIView):
             return Response({'serializer': serializer})
         serializer.save()
 
-        return HttpResponseRedirect('profile',pk) # Configure to return the auther profile
+        return redirect('profile',pk) # Configure to return the auther profile
 
+class AddReview(APIView):
 
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'projects/add_review.html'
+    parser_classes = [JSONParser,FormParser,MultiPartParser]
 
+    model = Review
+    def get(self, request, pk):
+        project = get_object_or_404(Project, pk=pk)
+        serializer = ReviewSerializer()
+        return Response({'serializer': serializer, 'project': project})
 
-
+    def post(self, request,pk):
+        project = get_object_or_404(Project, pk=pk)
+        serializer = ReviewSerializer(data = request.data)
+        if not serializer.is_valid():
+            return Response({'serializer': serializer})
+        serializer.save()
+        # return HttpResponseRedirect('projectDetail') # Configure to return the author profile
+        return redirect('projectDetail',pk)
 
 
 

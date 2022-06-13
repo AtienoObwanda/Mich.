@@ -94,9 +94,10 @@ class Review(models.Model):
     design = models.IntegerField(default=0, choices=REVIEW, null=True)
     usability = models.IntegerField(default=0, choices=REVIEW, null=True)
     content = models.IntegerField(default=0, choices=REVIEW, null=True)
+    comment = models.TextField(blank=True)
 
     def __str__(self):
-        return self.project
+        return self.comment
 
     def save_rating(self):
         self.save()

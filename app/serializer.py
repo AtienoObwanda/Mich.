@@ -26,7 +26,7 @@ class CommentSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-class ReviiewSerializer(serializers.ModelSerializer):
+class ReviewSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Review

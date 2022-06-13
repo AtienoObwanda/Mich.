@@ -1,0 +1,18 @@
+{% load rest_framework %}
+{% load %}
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<form action="{% url 'review' project.pk %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% render_form serializer template_pack='rest_framework/vertical'%}
+    <input type="submit" value="POST">
+</form>
+
+</body></html>
