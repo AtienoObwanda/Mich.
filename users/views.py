@@ -163,17 +163,20 @@ class DeleteProject(APIView):
 
 
 
-class EditProfile(APIView):
+class UserProfile(APIView):
 
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'users/edit_profile.html'
+    template_name = 'users/user_profile.html'
     parser_classes = [JSONParser,FormParser,MultiPartParser]
 
     model = Profile
     def get(self, request,pk):
-        user = get_object_or_404(User, pk=pk)
+        profile = Profile.objects.get(pk=pk)
+        # user = get_object_or_404(User, pk=pk)
+        user = profile.user
+        projects = Project.objects.filter(projectOwner=user).order_by('-uploadDate')
         serializer = ProfileSerializer()
-        return Response({'serializer': serializer})
+        return Response({'serializer': serializer, 'profile':profile, 'user':user, 'projects':projects})
 
     def put(self, request, format=None):
         # project = get_object_or_404(Project, pk=pk)
