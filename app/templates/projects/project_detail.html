@@ -5,13 +5,69 @@
 <link rel="stylesheet" type="text/css" href="{% static 'projects/project.css' %}">
 
 
+
+
+
+
+        
+
+
+       
+    </div>
+   
+</div>
+
+
+
+
 <div class="carousel-inner mb-5" role="listbox">
     <div class="carouselItem active image" style="background-image: url('{{project.projectImage.url}}')">
       <div class="carousel-caption d-none d-md-block">
-        
+
+<div class="row d-flex justify-content-center mt-100">
+
+    <div class="col-md-8">
+        <div class="progress yellow">
+            <span class="progress-left">
+                            <span class="progress-bar"></span>
+            </span>
+            <span class="progress-right">
+                            <span class="progress-bar"></span>
+            </span>
+            <div class="progress-value">7%</div>
+          </div>
+
+        <div class="progress blue">
+            <span class="progress-left">
+                              <span class="progress-bar"></span>
+            </span>
+            <span class="progress-right">
+                              <span class="progress-bar"></span>
+            </span>
+            <div class="progress-value">1%</div>
+          </div>
+  
+          
+            <div class="progress yellow">
+              <span class="progress-left">
+                              <span class="progress-bar"></span>
+              </span>
+              <span class="progress-right">
+                              <span class="progress-bar"></span>
+              </span>
+              <div class="progress-value">7%</div>
+            </div>
+        </div>
+        </div>
+          
       </div>
     </div>
     </div>
+
+
+
+
+
 <div class="container mb-5 mt-5">
     <h3 class="display-4">{{project.projectName}}</h3>
     <p class="lead text-center">{{project.projectDescription}}</p>
