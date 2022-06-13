@@ -163,6 +163,26 @@ class DeleteProject(APIView):
 
 
 
+class EditProfile(APIView):
+
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'users/edit_profile.html'
+    parser_classes = [JSONParser,FormParser,MultiPartParser]
+
+    model = Profile
+    def get(self, request,pk):
+        user = get_object_or_404(User, pk=pk)
+        serializer = ProfileSerializer()
+        return Response({'serializer': serializer})
+
+    def post(self, request, format=None):
+        # project = get_object_or_404(Project, pk=pk)
+        serializer = ProfileSerializer(data = request.data)
+        if not serializer.is_valid():
+            return Response({'serializer': serializer})
+        serializer.save()
+
+        return HttpResponseRedirect('projects') # Configure to return the auther profile
 
 
 
