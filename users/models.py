@@ -1,14 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
+from PIL import Image
+from django.urls import reverse
 
 
-# class User(AbstractUser):
-#     name = models.CharField(max_length=255)
-#     email = models.EmailField(max_length=255, unique=True)
-#     password = models.CharField(max_length=255)
-#     username = None
-
-#     USERNAME_FIELD = 'email'
-
-#     REQUIRED_FIELDS = []
-
+class Profile(models.Model):
+    user = models.OneToOneField(User, verbose_name='user', related_name='profile', on_delete=models.CASCADE)
+    firstName = models.CharField(max_length=30)
+    lastName = models.CharField(max_length=30)
+    country = models.CharField(max_length=50)
+    profileImage = models.ImageField(default='default.png',upload_to='projectPics')
+    bio=models.TextField(max_length=500, blank=True, default=f'Inspired to Code...')
+    
