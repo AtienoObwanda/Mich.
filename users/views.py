@@ -142,7 +142,7 @@ class UpdatePoject(APIView):
         if not serializer.is_valid():
             return Response({'serializer': serializer, 'profile': profile})
         serializer.save()
-        return redirect('project')
+        return redirect('projectDetail',pk)
 
 
 class DeleteProject(APIView):

@@ -83,7 +83,14 @@
                 votes
             </div>
             <div class="col-3 ml-5" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
-                comments
+                <h4 class="text-center"> COMMENTS</h4>
+                {% for review in reviews %}
+                <ul>
+                    <li style="list-style-type: none;">
+                        {{review.comment}} <span class= "text-muted">{{review.user}}</span>
+                    </li>
+                </ul>
+            {% endfor %}
             </div>
         </div>
     </div>

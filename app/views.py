@@ -2,6 +2,8 @@ from  rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework import status
+from django.db.models import Avg
+
 from django.shortcuts import redirect, get_object_or_404
 
 
@@ -42,6 +44,11 @@ class ProjectDetailList(APIView):
     renderer_classes= [TemplateHTMLRenderer]
     template_name='projects/project_detail.html'
 
+
     def get(self, request, pk):
+        usability = Review.objects.filter(project_id=pk).aggregate(Avg('usability'))
+        content = Review.objects.filter(project_id=pk).aggregate(Avg('content'))
+        design = Review.objects.filter(project_id=pk).aggregate(Avg('design'))
+        reviews = Review.objects.filter(project_id=pk)
         project = get_object_or_404(Project, pk=pk)
-        return Response({'project': project})
+        return Response({'project': project, 'reviews':reviews, 'usability': usability, 'design':design, 'content': content})
