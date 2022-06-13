@@ -6,11 +6,11 @@ from rest_framework.exceptions import AuthenticationFailed
 import jwt, datetime
 from rest_framework.renderers import TemplateHTMLRenderer
 from django.http import HttpResponseRedirect
-
+from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 
 from .serializers import *
 from app.models import *
-from app.serializer import ProjectSerializer
+from app.serializer import ProjectSerializer #, AddProjectSerializer
 
 
 
@@ -109,21 +109,24 @@ class LogoutView(APIView):
 
 
 class AddProject(APIView):
+
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'projects/add_project.html'
+    parser_classes = [JSONParser,FormParser,MultiPartParser]
+
     model = Project
     def get(self, request):
         serializer = ProjectSerializer()
         return Response({'serializer': serializer})
 
-    def post(self, request):
+    def post(self, request, format=None):
         # project = get_object_or_404(Project, pk=pk)
-        serializer = ProjectSerializer( data = request.data)
+        serializer = ProjectSerializer(data = request.data)
         if not serializer.is_valid():
             return Response({'serializer': serializer})
         serializer.save()
 
-        return HttpResponseRedirect('') # Configure to return the auther profile
+        return HttpResponseRedirect('projects') # Configure to return the auther profile
 
 class UpdatePoject(APIView):
     renderer_classes = [TemplateHTMLRenderer]

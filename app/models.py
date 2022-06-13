@@ -8,7 +8,8 @@ from cloudinary.models import CloudinaryField
 
 class Project(models.Model):
     projectName = models.CharField(max_length=30)
-    projectImage = CloudinaryField('image')
+    # projectImage = CloudinaryField('image')
+    projectImage = models.ImageField(upload_to='projectPics')
     projectLink = models.URLField(max_length=200, null=True, blank=True)
     projectDescription = models.TextField(max_length=500, blank=True, default=f'Project Description')
     projectCategory = models.CharField(max_length=60)
@@ -17,7 +18,7 @@ class Project(models.Model):
     uploadDate = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-            return self.projectName
+            return str (self.projectName)
 
     def saveProject(self):
         self.save()
