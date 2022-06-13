@@ -37,7 +37,8 @@ class LoginUser(APIView):
     template_name = 'login_user.html'
     model = User
     def get(self, request):
-        serializer = UserSerializer()
+        serializer = LoginSerializer()
+        # serializer = UserSerializer()
         return Response({'serializer': serializer})
 
     def post (self, request):
@@ -59,7 +60,7 @@ class LoginUser(APIView):
             'iat' : datetime.datetime.utcnow()
         }
 
-        token = jwt.encode(payload, 'secret', algorithms='HS256') 
+        token = jwt.encode(payload, 'secret', algorithm='HS256') 
         
         response = Response()
 
@@ -69,7 +70,7 @@ class LoginUser(APIView):
             'jwt' : token
         }
 
-        return response
+        return redirect ('projects')
 
 
 class ProfileView(APIView):
