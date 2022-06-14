@@ -9,7 +9,7 @@ from . import views
 urlpatterns = [
     # path('api/register/', views.RegisterUser.as_view()),
     path('api/login/', views.LoginUser.as_view()),
-    path('api/user/', views.ProfileView.as_view()),
+    # path('api/user/', views.ProfileView.as_view()),
     path('api/logout/', views.LogoutView.as_view()),
 
     # path('register', views.UserRegistrationView.as_view(), name='register'),
@@ -19,7 +19,6 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout_user.html'), name='logout'),
-    path('user/', views.ProfileView.as_view(), name='account'),
     path('logout/', views.LogoutView.as_view()),
     path('add/project/', views.AddProject.as_view(),name='addProject'),
     path('edit/project/<int:pk>/', views.UpdatePoject.as_view(),name='updateProject'),

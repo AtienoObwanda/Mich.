@@ -164,24 +164,7 @@ class LoginUser(APIView):
         return redirect ('projects')
 
 
-class ProfileView(APIView):
-    
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'profile_view.html'
 
-    def get(self, request):
-        token = request.COOKIES.get('jwt')
-        if not token:
-            raise AuthenticationFailed('Invalid Session!')
-
-        try:
-            payload = jwt.decode(token, 'secret', algorithms = ['HS256'])
-        except jwt.ExpiredSignatureError:
-            raise AuthenticationFailed('Session expired!')
-            
-        user = User.objects.filter(id=payload['id']).first()
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
 
 
 class LogoutView(APIView):
