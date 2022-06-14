@@ -11,10 +11,14 @@ from django.contrib.auth import login
 from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
-from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework import generics
+from rest_framework import status
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from rest_framework.generics import CreateAPIView
 
-
+from rest_framework import status
+from rest_framework.permissions import AllowAny
 from .serializers import *
 
 from app.models import *
@@ -36,7 +40,74 @@ class RegisterUser(APIView):
         # return Response(serializer.data)
         return redirect('login')
 
+
+
+class UserRegistrationView(CreateAPIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'register_user.html'
+    model = User
+    serializer_class = UserSerializer
+    permission_classes = (AllowAny,)
+
+    def get(self, request):
+        serializer = UserSerializer()
+        return Response({'serializer': serializer})
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        status_code = status.HTTP_201_CREATED
+        response = {
+            'success' : 'True',
+            'status code' : status_code,
+            'message': 'User registered  successfully',
+            }
+        # return Response(response, status=status_code)
+        return redirect('login')
+
+
+class UserLoginView(RetrieveAPIView):
+    # renderer_classes = [TemplateHTMLRenderer]
+    # template_name = 'login_user.html'
+
+    permission_classes = (AllowAny,)
+    serializer_class = UserLoginSerializer
+   
+    # def get(self, request):
+    #     serializer = UserLoginSerializer()
+    #     # serializer = UserSerializer()
+    #     return Response({'serializer': serializer})
+
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        response = {
+            'success' : 'True',
+            'status code' : status.HTTP_200_OK,
+            'message': 'User logged in  successfully',
+            'token' : serializer.data['token'],
+            }
+        status_code = status.HTTP_200_OK
+
+        # return Response(response, status=status_code)
+        return redirect ('projects')
+
+
+
+
+
+
+
+
+
+
+
+
+
 class LoginUser(APIView):
+    permission_classes = (AllowAny,)
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'login_user.html'
     model = User

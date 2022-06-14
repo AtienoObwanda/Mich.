@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import AuthenticationFailed
 import jwt, datetime
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 
 from django.shortcuts import redirect, get_object_or_404
 
@@ -38,6 +39,8 @@ class TestProjectApi(APIView):
 
 
 class AllProjectList(APIView):
+    permission_classes = (AllowAny,)
+
 
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'projects/project_list.html'
