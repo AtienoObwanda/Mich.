@@ -57,13 +57,13 @@ class ProjectDetailList(APIView):
         projectDesign = Review.objects.filter(project_id=pk).aggregate(Avg('design'))
         reviews = Review.objects.filter(project_id=pk)
         
-        content = [content for content in reviews]
+        content = [score.content for score in reviews]
         contentAverage = sum(content) / len(content)
 
-        design = [design for design in reviews]
+        design = [score.design for score in reviews]
         designAverage = sum(design) / len(design)
 
-        usability = [usability for usability in reviews]
+        usability = [score.usability for score in reviews]
         usabilityAverage = sum(usability) / len(usability)   
         
         scoreAverage= (contentAverage + designAverage + usabilityAverage) / 3
