@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 
-from .views import  ProjectCreateView, ProjectDeleteView, ProjectUpdateView
+from .views import  ProjectReviewView,ProjectCreateView, ProjectDeleteView, ProjectUpdateView
 
 from . import views
 
@@ -23,7 +23,7 @@ urlpatterns = [
     path('logout/', views.LogoutView.as_view()),
     path('add/project/', views.AddProject.as_view(),name='addProject'),
     path('edit/project/<int:pk>/', views.UpdatePoject.as_view(),name='updateProject'),
-    path('review/project/<int:pk>/', views.AddReview.as_view(),name='review'),
+    path('review/project/<int:pk>/', ProjectReviewView.as_view(),name='review'),
 
     path('delete/project/<int:pk>/', views.DeleteProject.as_view(),name='deleteProject'),
     path('profile/<int:pk>/', views.UserProfile.as_view(),name='profile'),
@@ -32,6 +32,7 @@ urlpatterns = [
     path('project/new/', ProjectCreateView.as_view(), name='createProject' ),
     path('project/update/<int:pk>/', ProjectUpdateView.as_view(), name='updateProject' ),
     path('project/delete/<int:pk>/', ProjectDeleteView.as_view(), name='deleteProject' ),
+    path('search/',  views.profileSearch, name='search')
 
 ]
 if settings.DEBUG:

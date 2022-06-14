@@ -16,6 +16,7 @@ from rest_framework.generics import CreateAPIView
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.views.generic import DeleteView, ListView, UpdateView,DetailView, CreateView
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 
 from rest_framework import status
 from rest_framework.permissions import AllowAny
@@ -56,17 +57,22 @@ class ProjectCreateView( LoginRequiredMixin, CreateView):
         form.instance.projectOwner = self.request.user
         return super().form_valid(form)
 
+class ProjectReviewView( LoginRequiredMixin, CreateView):
+    model = Review
+    fields=['design', 'usability','content', 'comment']
+    template_name = 'projects/newReview.html'    
+    def form_valid(self, form):
+        form.instance.projectOwner = self.request.user
+        return super().form_valid(form)
+
 
 
 
 # @method_decorator(login_required, name='dispatch')
 class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin,UpdateView,):
     model = Project
-    fields=['']
+    fields=['projectName', 'projectImage','projectLink','projectDescription','projectCategory','projectTechnology']
     template_name = 'projects/updateProject.html'    
-   
-
-
     def get_success_url(self):
         pk = self.kwargs['pk']
         return reverse_lazy('projectDetail', kwargs={'pk': pk})
@@ -89,7 +95,20 @@ class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin,DeleteView):
 
 
 
-
+@login_required
+def profileSearch(request):
+    if 'search_user' in request.GET and request.GET['search_user']:
+        name = request.GET.get("search_user")
+        results = Profile.search_profile(name)
+        message = f'name'
+        params = {
+            'results': results,
+            'message': message
+        }
+        return render(request, 'users/search.html', params)
+    else:
+        message = "Search couldn't be completed..."
+    return render(request, 'users/search.html', {'message': message})
 
 
 
