@@ -3,6 +3,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 
+from .views import  ProjectCreateView, ProjectDeleteView, ProjectUpdateView
 
 from . import views
 
@@ -28,6 +29,9 @@ urlpatterns = [
     path('profile/<int:pk>/', views.UserProfile.as_view(),name='profile'),
     path('edit/profile/<int:pk>/', views.EditProfile.as_view(),name='editProfile'),
 
+    path('project/new/', ProjectCreateView.as_view(), name='createProject' ),
+    path('project/update/<int:pk>/', ProjectUpdateView.as_view(), name='updateProject' ),
+    path('project/delete/<int:pk>/', ProjectDeleteView.as_view(), name='deleteProject' ),
 
 ]
 if settings.DEBUG:

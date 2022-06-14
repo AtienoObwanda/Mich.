@@ -1,3 +1,4 @@
+from django import views
 from django.shortcuts import redirect, get_object_or_404, render
 from rest_framework.views import APIView
 from rest_framework.response import Response    
@@ -5,8 +6,6 @@ from rest_framework.exceptions import AuthenticationFailed
 import jwt, datetime
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
-from django.contrib.auth import login
-from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
 from rest_framework import status
@@ -14,6 +13,9 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.generics import CreateAPIView
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.views.generic import DeleteView, ListView, UpdateView,DetailView, CreateView
+from django.urls import reverse_lazy
 
 from rest_framework import status
 from rest_framework.permissions import AllowAny
@@ -45,6 +47,45 @@ def logout(request):
 
 
 
+# @method_decorator(login_required, name='dispatch')
+class ProjectCreateView( LoginRequiredMixin, CreateView):
+    model = Project
+    fields=['projectName', 'projectImage','projectLink','projectDescription','projectCategory','projectTechnology']
+    template_name = 'projects/newProject.html'    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+
+
+# @method_decorator(login_required, name='dispatch')
+class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin,UpdateView,):
+    model = Project
+    fields=['']
+    template_name = 'projects/updateProject.html'    
+   
+
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('projectDetail', kwargs={'pk': pk})
+    def test_func(self):
+        project = self.get_object()
+        return self.request.user == project.projectOwner
+
+        
+class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin,DeleteView):
+    model = Project
+    template_name = 'projects/confirmDelete.html'    
+    context_object_name = 'project'
+    success_url = '/projects/'
+
+    def test_func(self, request, pk, *args, **kwargs):
+        project = self.get_object()
+        if self.request.user == project.projectOwner:
+            return True
+        return False
 
 
 
@@ -66,6 +107,126 @@ def logout(request):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# API VIEWS
+# ----------------------------------------------------------------
 class UserRegistrationView(CreateAPIView):
     permission_classes = (AllowAny,)
     renderer_classes = [TemplateHTMLRenderer]
@@ -162,9 +323,6 @@ class LoginUser(APIView):
         }
 
         return redirect ('projects')
-
-
-
 
 
 class LogoutView(APIView):

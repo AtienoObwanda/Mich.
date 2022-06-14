@@ -1,4 +1,5 @@
-from dataclasses import field
+from dataclasses import field, fields
+from pyexpat import model
 from rest_framework import serializers
 
 from .models import *
@@ -13,6 +14,18 @@ class ProjectSerializer(serializers.ModelSerializer):
         instance = self.Meta.model(**validated_data)
         instance.save()
         return instance
+
+
+class AddProjectSerializer(serializers.Serializer):
+    class Meta:
+        model = Project
+        fields = "__all__"
+    
+    def create(self, validated_data):
+        instance = self.Meta.model(**validated_data)
+        instance.save()
+        return instance
+
 
 
 class CommentSerializer(serializers.ModelSerializer):
