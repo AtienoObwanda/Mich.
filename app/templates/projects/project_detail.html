@@ -4,22 +4,6 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'projects/project.css' %}">
 
-
-
-
-
-
-        
-
-
-       
-    </div>
-   
-</div>
-
-
-
-
 <div class="carousel-inner mb-5" role="listbox">
     <div class="carouselItem active image" style="background-image: url('{{project.projectImage.url}}')">
       <div class="carousel-caption d-none d-md-block">
@@ -71,7 +55,7 @@
 <div class="container mb-5 mt-5">
     <h3 class="display-4">{{project.projectName}}</h3>
     <p class="lead text-center">{{project.projectDescription}}</p>
-    <p class="lead text-center">Rate Average</p>
+    <p class="lead text-center">Rate Average{{scoreAv}}</p>
     <p class="text-center" > <a href="{% url 'review' project.pk %}" style="text-decoration: none; color: #ee4723; font-size: 12px; font-weight: bold">Rate Project</a></p>
 
 
@@ -80,20 +64,55 @@
     <div class="container">
         <div class="row">
             <div class="col-8" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
-                votes
+                <div class="table-responsive">
+                <table class="table">
+                 <thead>
+                    <tr>
+                        <th scope="col">Design</th>
+                        <th scope="col">Usability</th>
+                        <th scope="col">Content</th>
+                        <th scope="col">Reviewer</th>
+
+                    </tr>
+                 </thead>
+                 <tbody>
+                    {% for review in reviews %}
+
+                    <tr>
+                    <td>{{review.design}}</td>
+                    <td>{{review.usability}}</td>
+                    <td>{{review.content}}</td>
+                    <td>{{review.user}}</td>
+
+                </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+                </div>
+
             </div>
-            <div class="col-3 ml-5" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
-                <h4 class="text-center"> COMMENTS</h4>
-                {% for review in reviews %}
-                <ul>
-                    <li style="list-style-type: none;">
-                        {{review.comment}} <span class= "text-muted">{{review.user}}</span>
-                    </li>
-                </ul>
-            {% endfor %}
+            <div class="col-3 ml-5">
+                <h4 class="text-center"> Remarks</h4>
+
+                <div class="comtainer justify-content-center mt-2 border-left border-right">
+                    {% for review in reviews %}
+                        <div class="d-flex justify-content-center py-2">
+                            <div class="second py-2 px-2"> <span class="text1">{{review.comment}}</span>
+                                <div class="d-flex justify-content-between py-1 pt-2">
+                                    <div><img src="{{review.user.profileImage}}" width="18"><span class="text2">{{review.user}}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            
             </div>
         </div>
     </div>
+
+
+
 
 
 

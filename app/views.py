@@ -11,6 +11,7 @@ from django.shortcuts import redirect, get_object_or_404
 from .models import *
 from .serializer import ProjectSerializer
 
+from users.models import Profile
 
   # TESTING PROJECT ON POSTMAN
 class TestProjectApi(APIView):
@@ -36,6 +37,7 @@ class AllProjectList(APIView):
     template_name = 'projects/project_list.html'
 
     def get(self, request, format=None):
+        # profile = Profile.objects.get(profile_pk=pk)
         projects = Project.objects.all()
         return Response({'projects':projects})
 
@@ -46,9 +48,24 @@ class ProjectDetailList(APIView):
 
 
     def get(self, request, pk):
-        usability = Review.objects.filter(project_id=pk).aggregate(Avg('usability'))
-        content = Review.objects.filter(project_id=pk).aggregate(Avg('content'))
-        design = Review.objects.filter(project_id=pk).aggregate(Avg('design'))
+
+        # profile = Profile.objects.get(profile_pk=pk)
+        # user = profile.user
+
+        projectUsability = Review.objects.filter(project_id=pk).aggregate(Avg('usability'))
+        projectContent = Review.objects.filter(project_id=pk).aggregate(Avg('content'))
+        projectDesign = Review.objects.filter(project_id=pk).aggregate(Avg('design'))
         reviews = Review.objects.filter(project_id=pk)
+        
+        content = [content for content in reviews]
+        contentAverage = sum(content) / len(content)
+
+        design = [design for design in reviews]
+        designAverage = sum(design) / len(design)
+
+        usability = [usability for usability in reviews]
+        usabilityAverage = sum(usability) / len(usability)   
+        
+        scoreAverage= (contentAverage + designAverage + usabilityAverage) / 3
         project = get_object_or_404(Project, pk=pk)
-        return Response({'project': project, 'reviews':reviews, 'usability': usability, 'design':design, 'content': content})
+        return Response({'project': project, 'reviews':reviews, 'projectUsability': projectUsability, 'projectDesign':projectDesign, 'projectContent': projectContent, 'scoreAverage': scoreAverage})
