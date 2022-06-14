@@ -87,7 +87,7 @@
             </a>
           </div>
     </div>
-{% if user.IsAuthenticated %}
+{% if user.is_authenticated %}
       <div class="col-sm-2 col-md-2 navbar-right">
         <a class="navbar-logo" href="{% url 'register' %}"  class="text-center" style="color:black;" >Your Profile</a> 
         <a class="navbar-logo" href="{% url 'register' %}"  class="text-center" style="color:black;" >NEW PROJECT</a> 

@@ -280,7 +280,7 @@ class UserProfile(APIView):
 
 
 class EditProfile(APIView):
-
+    permission_classes = (IsAuthenticated,)
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'users/update_profile.html'
     parser_classes = [JSONParser,FormParser,MultiPartParser]
@@ -304,7 +304,7 @@ class EditProfile(APIView):
         return redirect('profile',pk) # Configure to return the auther profile
 
 class AddReview(APIView):
-
+    permission_classes = (IsAuthenticated,)
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'projects/add_review.html'
     parser_classes = [JSONParser,FormParser,MultiPartParser]
