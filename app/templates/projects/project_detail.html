@@ -7,8 +7,9 @@
 <div class="carousel-inner mb-5" role="listbox">
     <div class="carouselItem active image" style="background-image: url('{{project.projectImage.url}}')">
       <div class="carousel-caption d-none d-md-block">
+        <p class="lead text-center pt-50">Rate Score: {{scoreAverage}}</p>
 
-<div class="row d-flex justify-content-center mt-100 ml-5">
+    <div class="row d-flex justify-content-center mt-100 ml-5">
 
     <div class="col-md-8 ml-5">
         <div class="progress yellow">
@@ -55,7 +56,6 @@
 <div class="container mb-5 mt-5">
     <h3 class="display-4">{{project.projectName}}</h3>
     <p class="lead text-center">{{project.projectDescription}}</p>
-    <p class="lead text-center">Rate Average{{scoreAverage}}</p>
     <p class="text-center" > <a href="{% url 'review' project.pk %}" style="text-decoration: none; color: #ee4723; font-size: 12px; font-weight: bold">Rate Project</a></p>
 
 

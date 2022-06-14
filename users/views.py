@@ -5,14 +5,20 @@ from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 import jwt, datetime
 from rest_framework.renderers import TemplateHTMLRenderer
-from django.http import HttpResponseRedirect
+# from django.http import HttpResponseRedirect
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
+from django.contrib.auth import login
+from rest_framework import permissions
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework import generics
+
 
 from .serializers import *
 
 from app.models import *
-from app.serializer import ProjectSerializer, CommentSerializer, ReviewSerializer
-
+from app.serializer import ProjectSerializer,ReviewSerializer
 
 
 class RegisterUser(APIView):
@@ -30,7 +36,6 @@ class RegisterUser(APIView):
         # return Response(serializer.data)
         return redirect('login')
 
-
 class LoginUser(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'login_user.html'
@@ -40,7 +45,7 @@ class LoginUser(APIView):
         # serializer = UserSerializer()
         return Response({'serializer': serializer})
 
-    def post (self, request):
+    def post (self,request):
         email = request.data['email']
         password = request.data['password']
 
@@ -73,6 +78,7 @@ class LoginUser(APIView):
 
 
 class ProfileView(APIView):
+    
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'profile_view.html'
 
@@ -92,6 +98,7 @@ class ProfileView(APIView):
 
 
 class LogoutView(APIView):
+   
     def post(self, request):
         response = Response()
         response.delete_cookie(jwt)
@@ -99,7 +106,8 @@ class LogoutView(APIView):
         response.data = {
             'message' : 'success'
         }
-        return response
+        return redirect('login')
+
 
 
 
@@ -108,6 +116,7 @@ class LogoutView(APIView):
 
 
 class AddProject(APIView):
+    permission_classes = [IsAuthenticated]
 
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'projects/add_project.html'
@@ -128,6 +137,7 @@ class AddProject(APIView):
         return redirect('projects') # Configure to return the auther profile
 
 class UpdatePoject(APIView):
+    permission_classes = [IsAuthenticated]
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'projects/update_project.html'
 
@@ -140,12 +150,13 @@ class UpdatePoject(APIView):
         project = get_object_or_404(Project, pk=pk)
         serializer = ProjectSerializer(project, data=request.data)
         if not serializer.is_valid():
-            return Response({'serializer': serializer, 'profile': profile})
+            return Response({'serializer': serializer, 'project': project})
         serializer.save()
         return redirect('projectDetail',pk)
 
 
 class DeleteProject(APIView):
+    permission_classes = [IsAuthenticated]
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'projects/delete_project.html'
 
@@ -163,7 +174,7 @@ class DeleteProject(APIView):
 
 
 class UserProfile(APIView):
-
+    permission_classes = [IsAuthenticated]
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'users/user_profile.html'
     parser_classes = [JSONParser,FormParser,MultiPartParser]

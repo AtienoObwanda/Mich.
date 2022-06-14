@@ -1,6 +1,9 @@
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+# from users.views import MyObtainTokenPairView,  TestRegisterView
+# from rest_framework_simplejwt.views import TokenRefreshView
+
 from . import views
 
 urlpatterns = [
@@ -9,9 +12,9 @@ urlpatterns = [
     path('api/user/', views.ProfileView.as_view()),
     path('api/logout/', views.LogoutView.as_view()),
 
-
     path('register', views.RegisterUser.as_view(), name='register'),
     path('login/', views.LoginUser.as_view(), name = 'login'),
+
     path('user/', views.ProfileView.as_view(), name='account'),
     path('logout/', views.LogoutView.as_view()),
     path('add/project/', views.AddProject.as_view(),name='addProject'),

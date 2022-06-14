@@ -87,11 +87,18 @@
             </a>
           </div>
     </div>
-    <div class="col-sm-2 col-md-2 navbar-right">
-      <a class="navbar-logo" href="{% url 'register' %}"  class="text-center" style="color:black;" >REGISTER</a> /
-      <a class="navbar-logo" href="{% url 'login' %}" class="text-center" style="color:black;">LOG IN</a>
-      
-    </div>     
+{% if user.IsAuthenticated %}
+      <div class="col-sm-2 col-md-2 navbar-right">
+        <a class="navbar-logo" href="{% url 'register' %}"  class="text-center" style="color:black;" >Your Profile</a> 
+        <a class="navbar-logo" href="{% url 'register' %}"  class="text-center" style="color:black;" >NEW PROJECT</a> 
+        <a class="navbar-logo" href="{% url 'login' %}" class="text-center" style="color:black;">LOG OUT</a>
+      </div>  
+{% else %} 
+      <div class="col-sm-2 col-md-2 navbar-right">
+        <a class="navbar-logo" href="{% url 'register' %}"  class="text-center" style="color:black;" >REGISTER</a> /
+        <a class="navbar-logo" href="{% url 'login' %}" class="text-center" style="color:black;">LOG IN</a>
+      </div>  
+{% endif %}
   </div>
   </nav>
   </div>

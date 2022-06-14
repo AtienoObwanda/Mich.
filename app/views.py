@@ -4,6 +4,10 @@ from rest_framework.views import APIView
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework import status
 from django.db.models import Avg
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import AuthenticationFailed
+import jwt, datetime
+from rest_framework.permissions import IsAuthenticated
 
 from django.shortcuts import redirect, get_object_or_404
 
@@ -34,6 +38,7 @@ class TestProjectApi(APIView):
 
 
 class AllProjectList(APIView):
+
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'projects/project_list.html'
 
@@ -44,15 +49,14 @@ class AllProjectList(APIView):
 
 
 class ProjectDetailList(APIView):
+    permission_classes = [IsAuthenticated]
     renderer_classes= [TemplateHTMLRenderer]
     template_name='projects/project_detail.html'
 
 
     def get(self, request, pk):
-
-        # profile = Profile.objects.get(profile_pk=pk)
-        # user = profile.user
-
+        
+       
         projectUsability = Review.objects.filter(project_id=pk).aggregate(Avg('usability'))
         projectContent = Review.objects.filter(project_id=pk).aggregate(Avg('content'))
         projectDesign = Review.objects.filter(project_id=pk).aggregate(Avg('design'))
