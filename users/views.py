@@ -25,7 +25,7 @@ from .serializers import *
 from app.models import *
 from app.serializer import ProjectSerializer,ReviewSerializer
 
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, ReviewForm
 
 def register(request):
     if request.method == 'POST':
@@ -60,10 +60,32 @@ class ProjectCreateView( LoginRequiredMixin, CreateView):
 class ProjectReviewView( LoginRequiredMixin, CreateView):
     model = Review
     fields=['design', 'usability','content', 'comment']
-    template_name = 'projects/newReview.html'    
-    def form_valid(self, form):
+    template_name = 'projects/newReview.html'
+    def form_valid(self, form,pk):
+        project = get_object_or_404(Project, pk=pk)
         form.instance.projectOwner = self.request.user
-        return super().form_valid(form)
+        # return super().form_valid(form)
+        return redirect('projectDetail',pk)
+
+    
+@login_required
+def ProjectReviewView(request, pk):
+    current_user = request.user
+
+    project = Project.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            rating = form.save(commit=False)
+            rating.project = project
+            rating.user = current_user
+            rating.save()
+            return redirect('projectDetail', pk)
+    else:
+        form = ReviewForm()
+
+    return render(request, 'newReview.html', {'form': form, "project": project, "user": current_user})
 
 
 

@@ -13,7 +13,6 @@ urlpatterns = [
     # path('api/user/', views.ProfileView.as_view()),
     path('api/logout/', views.LogoutView.as_view()),
 
-    # path('register', views.UserRegistrationView.as_view(), name='register'),
     # path('login/', views.LoginUser.as_view(), name = 'login'),
 
 
@@ -23,7 +22,7 @@ urlpatterns = [
     path('logout/', views.LogoutView.as_view()),
     path('add/project/', views.AddProject.as_view(),name='addProject'),
     path('edit/project/<int:pk>/', views.UpdatePoject.as_view(),name='updateProject'),
-    path('review/project/<int:pk>/', ProjectReviewView.as_view(),name='review'),
+    path('review/project/<int:pk>/', views.ProjectReviewView,name='review'),
 
     path('delete/project/<int:pk>/', views.DeleteProject.as_view(),name='deleteProject'),
     path('profile/<int:pk>/', views.UserProfile.as_view(),name='profile'),
