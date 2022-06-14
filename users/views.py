@@ -1,5 +1,4 @@
-from re import A
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 from rest_framework.views import APIView
 from rest_framework.response import Response    
 from rest_framework.exceptions import AuthenticationFailed
@@ -22,6 +21,49 @@ from .serializers import *
 
 from app.models import *
 from app.serializer import ProjectSerializer,ReviewSerializer
+
+from .forms import UserRegistrationForm
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+            form.save()
+            # send_welcome_email(username,email)
+            # HttpResponseRedirect('login')
+            return redirect('login')
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'users/register.html', {'form': form})
+
+
+def logout(request):
+    return render(request, 'users/logout_user.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class UserRegistrationView(CreateAPIView):
