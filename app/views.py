@@ -21,7 +21,7 @@ from users.models import Profile
 
   # TESTING PROJECT ON POSTMAN
 class TestProjectApi(APIView):
-
+    permission_classes = (IsAuthenticated,)
     def get(self, request, format=None):
         projects = Project.objects.all()
         serializers = ProjectSerializer(projects, many=True)

@@ -5,7 +5,6 @@ from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 import jwt, datetime
 from rest_framework.renderers import TemplateHTMLRenderer
-# from django.http import HttpResponseRedirect
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 from django.contrib.auth import login
 from rest_framework import permissions
@@ -25,24 +24,8 @@ from app.models import *
 from app.serializer import ProjectSerializer,ReviewSerializer
 
 
-class RegisterUser(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'register_user.html'
-    model = User
-    def get(self, request):
-        serializer = UserSerializer()
-        return Response({'serializer': serializer})
-
-    def post(self,request):
-        serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        # return Response(serializer.data)
-        return redirect('login')
-
-
-
 class UserRegistrationView(CreateAPIView):
+    permission_classes = (AllowAny,)
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'register_user.html'
     model = User
@@ -68,16 +51,16 @@ class UserRegistrationView(CreateAPIView):
 
 
 class UserLoginView(RetrieveAPIView):
-    # renderer_classes = [TemplateHTMLRenderer]
-    # template_name = 'login_user.html'
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'login_user.html'
 
     permission_classes = (AllowAny,)
     serializer_class = UserLoginSerializer
    
-    # def get(self, request):
-    #     serializer = UserLoginSerializer()
-    #     # serializer = UserSerializer()
-    #     return Response({'serializer': serializer})
+    def get(self, request):
+        serializer = UserLoginSerializer()
+        # serializer = UserSerializer()
+        return Response({'serializer': serializer})
 
 
     def post(self, request):
@@ -93,15 +76,6 @@ class UserLoginView(RetrieveAPIView):
 
         # return Response(response, status=status_code)
         return redirect ('projects')
-
-
-
-
-
-
-
-
-
 
 
 
