@@ -1,0 +1,29 @@
+{% extends "projects/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'gram/profile.css' %}">
+<div class="cont pt-5"></div>
+<div class="container-fluid mt-5 pt-5">
+<div class="container mb-5 pt-4" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+    <form method="POST" enctype="multipart/form-data" action="">
+        {% csrf_token %}
+    <div class="row pt-5">
+        <div class="col-2"></div>
+        <div class="col-8 ">
+            <!-- <legend class="text-center">NEW POST</legend> -->
+            {{form|crispy}}
+        </div>
+        <div class="col-2"></div>
+
+    </div>
+    <div class="btnWrapper pb-5 pt-4">
+        <button class="form-btn center" type="submit" style="width: 30%; height:30px; border-radius: 35px;">save</button>
+    </div>
+</form>
+
+</div>
+
+</div>
+
+{% endblock content%}
