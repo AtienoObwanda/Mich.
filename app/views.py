@@ -1,3 +1,4 @@
+import statistics
 from  rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.renderers import TemplateHTMLRenderer
@@ -56,7 +57,11 @@ class ProjectDetailList(APIView):
         projectContent = Review.objects.filter(project_id=pk).aggregate(Avg('content'))
         projectDesign = Review.objects.filter(project_id=pk).aggregate(Avg('design'))
         reviews = Review.objects.filter(project_id=pk)
-        
+        project = get_object_or_404(Project, pk=pk)
+
+        '''
+        Calculating the average rating score
+        '''
         content = [score.content for score in reviews]
         contentAverage = sum(content) / len(content)
 
@@ -66,6 +71,7 @@ class ProjectDetailList(APIView):
         usability = [score.usability for score in reviews]
         usabilityAverage = sum(usability) / len(usability)   
         
-        scoreAverage= (contentAverage + designAverage + usabilityAverage) / 3
-        project = get_object_or_404(Project, pk=pk)
+        scoreAv= (contentAverage + designAverage + usabilityAverage) / 3
+        
+        scoreAverage = str(round(scoreAv, 2))
         return Response({'project': project, 'reviews':reviews, 'projectUsability': projectUsability, 'projectDesign':projectDesign, 'projectContent': projectContent, 'scoreAverage': scoreAverage})
