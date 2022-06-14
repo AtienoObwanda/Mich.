@@ -52,7 +52,7 @@ class AllProjectList(APIView):
 
 
 class ProjectDetailList(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = (AllowAny,)
     renderer_classes= [TemplateHTMLRenderer]
     template_name='projects/project_detail.html'
 
