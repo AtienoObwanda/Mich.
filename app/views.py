@@ -69,16 +69,16 @@ class ProjectDetailList(APIView):
         '''
         Calculating the average rating score
         '''
-        content = [score.content for score in reviews]
-        contentAverage = sum(content) / len(content)
+        # content = [score.content for score in reviews]
+        # contentAverage = sum(content) / len(content)
 
-        design = [score.design for score in reviews]
-        designAverage = sum(design) / len(design)
+        # design = [score.design for score in reviews]
+        # designAverage = sum(design) / len(design)
 
-        usability = [score.usability for score in reviews]
-        usabilityAverage = sum(usability) / len(usability)   
+        # usability = [score.usability for score in reviews]
+        # usabilityAverage = sum(usability) / len(usability)   
         
-        scoreAv= (contentAverage + designAverage + usabilityAverage) / 3
+        # scoreAv= (contentAverage + designAverage + usabilityAverage) / 3
         
-        scoreAverage = str(round(scoreAv, 2))
-        return Response({'project': project, 'reviews':reviews, 'projectUsability': projectUsability, 'projectDesign':projectDesign, 'projectContent': projectContent, 'scoreAverage': scoreAverage})
+        # scoreAverage = str(round(scoreAv, 2))
+        return Response({'project': project, 'reviews':reviews, 'projectUsability': projectUsability, 'projectDesign':projectDesign, 'projectContent': projectContent})
