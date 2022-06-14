@@ -53,7 +53,7 @@ class ProjectCreateView( LoginRequiredMixin, CreateView):
     fields=['projectName', 'projectImage','projectLink','projectDescription','projectCategory','projectTechnology']
     template_name = 'projects/newProject.html'    
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.projectOwner = self.request.user
         return super().form_valid(form)
 
 

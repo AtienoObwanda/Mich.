@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
+from django.urls import reverse
 
 # Profile model is contained inside the users application
 
@@ -16,6 +17,11 @@ class Project(models.Model):
     projectTechnology = models.CharField(max_length=60)
     projectOwner= models.ForeignKey(User, on_delete=models.CASCADE)
     uploadDate = models.DateTimeField(default=timezone.now)
+
+
+
+    def get_absolute_url(self):
+        return reverse('projects')
 
     def __str__(self):
             return str (self.projectName)
