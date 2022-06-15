@@ -11,20 +11,20 @@ Mich(Award) is a web application that allows users to upload their projects, and
 ****
 
 <!-- Screenshots -->
-![Alt text](/projectScreenshot/section.png?raw=true "Optional Title")
+![Alt text](/projectScreenshot/project.png?raw=true "Optional Title")
 
 
-**Live link:**  *#* <br />
+**Live link:**  *https://miichapp.herokuapp.com/* <br />
 
 
-**User Story** <br/>
+**User Story:** 
 ****
-
-* A user can navigate to home page, which is the landing page <br/>
-* As a user, you can be able to view other people's projects<br/>
-* Users can also sign up for an account, and login. <br/>
-* Logged in users can rate other people's projects.<br/>
-* You can also podt your projects for other's to rate. <br/>
+*As a user, you can be able to:* <br/>
+* View posted projects and their details <br/>
+* Post a project to be rated/reviewed<br/>
+* Rate/ review other users' projects <br/>
+* Search for projects.<br/>
+* View your profile page. <br/>
 
 
 
