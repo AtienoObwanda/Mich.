@@ -151,10 +151,11 @@
                   </a>       
                   <div class="card-body">
                     <p class="card-text"><strong>{{project.projectName}}</strong></p>
-                    <!-- <p class="card-text">Country</p> -->
+                    <small class="card-text text-muted">From: {{ project.projectOwner.profile.country }}</small>
 
                     <div class="d-flex justify-content-between align-items-center">
                       <div class="btn-group">
+                        
                         <small class="hideHover" > <a href="{% url 'projectDetail' project.pk %}" style="text-decoration: none; color: #ee4723; font-size: 14px; font-weight: bold">View</a></small>
                       </div>
                       <small class="text-muted">{{project.uploadDate|date}}</small>
@@ -163,7 +164,7 @@
                   <!--Author-->
                   <div class="d-flex flex-row mt-2 pt-3 pb-3" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
                       
-                    <img src="{{project.projectOwner.profileImage}}" width="50" class="rounded-circle  ml-4">
+                    <img src="{{project.projectOwner.profile.profileImage.url}}" width="50" class="rounded-circle  ml-4">
                     
                     <h6 class=" ml-4 mt-3">By <strong>{{project.projectOwner}}</strong></h6>
                        
