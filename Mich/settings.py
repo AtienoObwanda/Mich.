@@ -64,6 +64,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 ROOT_URLCONF = 'Mich.urls'
@@ -93,8 +95,12 @@ WSGI_APPLICATION = 'Mich.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+MODE=config("MODE", default="dev")
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
 
+
+# development
 if config('MODE')=="dev":
     DATABASES = {
         'default': {
@@ -108,7 +114,7 @@ if config('MODE')=="dev":
             'PORT': '',
         }
 }
-production
+# production
 else:
    DATABASES = {
        'default': dj_database_url.config(
