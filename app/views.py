@@ -5,12 +5,10 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework import status
 from django.db.models import Avg
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.exceptions import AuthenticationFailed
-import jwt, datetime
+from django.contrib.auth.decorators import login_required
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny
-
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import get_object_or_404, render
 
 
 
@@ -82,3 +80,19 @@ class ProjectDetailList(APIView):
         
         # scoreAverage = str(round(scoreAv, 2))
         return Response({'project': project, 'reviews':reviews, 'projectUsability': projectUsability, 'projectDesign':projectDesign, 'projectContent': projectContent})
+
+
+@login_required
+def projectSearch(request):
+    if 'search_projectName' in request.GET and request.GET['search_projectName']:
+        projectName = request.GET.get("search_projectName")
+        results = Project.search_projectName(projectName)
+        message = f'projectName'
+        params = {
+            'results': results,
+            'message': message
+        }
+        return render(request, 'users/search.html', params)
+    else:
+        message = "Search couldn't be completed..."
+    return render(request, 'users/search.html', {'message': message})

@@ -8,4 +8,6 @@ urlpatterns = [
     path('api/projects/', views.TestProjectApi.as_view()),
     path('', views.AllProjectList.as_view(), name='projects' ),
     path('project/<int:pk>/', views.ProjectDetailList.as_view(),name='projectDetail'),
+    path('search/',  views.projectSearch, name='search')
+
    ]

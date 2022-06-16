@@ -31,7 +31,6 @@ urlpatterns = [
     path('project/new/', ProjectCreateView.as_view(), name='createProject' ),
     path('project/update/<int:pk>/', ProjectUpdateView.as_view(), name='updateProject' ),
     path('project/delete/<int:pk>/', ProjectDeleteView.as_view(), name='deleteProject' ),
-    path('search/',  views.profileSearch, name='search')
 
 ]
 if settings.DEBUG:
