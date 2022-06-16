@@ -10,21 +10,47 @@
             <h4 class="text-center">Found {{ results|length }} user{{ results|pluralize }}</h4>
             {% else %}
             <div class="col-md-12 mb-4 mt-4 pt-3 pb-4" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
-                <h4 class="text-center"> Found 0 user with username <strong></strong></h4>
+                <h4 class="text-center"> Found 0 projects for this search <strong></strong></h4>
             </div>
 
             
             {% endif %}
             <hr>
             {% if results %}
-            {% for user_profile in results %}
+            {% for project in results %}
 
                 <div class="row">
-                    <div class="col-md-12 mb-4 mt-4 pt-3 pb-4" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
-                        <img src="{{user_profile.user.profile.image.url}}" alt=""
-                             class="rounded-circle border ml-3 mt-2  mr-3" width="95" height="95">
-                    <strong><a href="{% url 'profile' user_profile.pk %}" style="text-decoration:none; color:black; font-weight:bold;">{{user_profile.user.username}}</a></strong><br>
-                </div>
+                    <div class="col-4 mb-5">
+                        <div class="card shadow-sm projectCard">
+                          <a href="{% url 'projectDetail' project.pk %}" style="text-decoration: none;">
+                            <img src="{{project.projectImage.url}}" class="img-responsive" alt="..."  style="width:100%; height:200px;" >
+                          </a>       
+                          <div class="card-body">
+                            <p class="card-text"><strong>{{project.projectName}}</strong></p>
+                            <small class="card-text text-muted">From: {{ project.projectOwner.profile.country }}</small>
+        
+                            <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                
+                                <small class="hideHover" > <a href="{% url 'projectDetail' project.pk %}" style="text-decoration: none; color: #ee4723; font-size: 14px; font-weight: bold">View</a></small>
+                              </div>
+                              <small class="text-muted">{{project.uploadDate|date}}</small>
+                            </div>
+                          </div>
+                          <!--Author-->
+                          <div class="d-flex flex-row mt-2 pt-3 pb-3" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+                              
+                            <img src="{{project.projectOwner.profile.profileImage.url}}" width="50" class="rounded-circle  ml-4">
+                            
+                            <h6 class=" ml-4 mt-3">By <strong>{{project.projectOwner}}</strong></h6>
+                               
+                               <!-- <span class="days-ago">2 days ago</span> -->
+                            
+                        </div>
+                        <!--End Of Autho-->
+                        
+                        </div>
+                      </div>
             {% endfor %}
             {% endif %}
         </div>
