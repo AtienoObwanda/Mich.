@@ -28,16 +28,16 @@ class AddProjectSerializer(serializers.Serializer):
 
 
 
-class CommentSerializer(serializers.ModelSerializer):
+# class CommentSerializer(serializers.ModelSerializer):
     
-    class Meta:
-        model = Comment
-        fields = "__all__"
+#     class Meta:
+#         model = Comment
+#         fields = "__all__"
 
-    def create(self, validated_data):
-        instance = self.Meta.model(**validated_data)
-        instance.save()
-        return instance
+#     def create(self, validated_data):
+#         instance = self.Meta.model(**validated_data)
+#         instance.save()
+#         return instance
 
 class ReviewSerializer(serializers.ModelSerializer):
     

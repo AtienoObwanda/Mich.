@@ -58,29 +58,29 @@ class Project(models.Model):
 
 
 
-class Comment(models.Model):
-    comment = models.TextField()
-    createDate = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+# class Comment(models.Model):
+#     comment = models.TextField()
+#     createDate = models.DateTimeField(default=timezone.now)
+#     author = models.ForeignKey(User, on_delete=models.CASCADE)
+#     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     
-    def save_comment(self):
-        self.save()
+#     def save_comment(self):
+#         self.save()
 
-    def delete_comment(self):
-        self.delete()
+#     def delete_comment(self):
+#         self.delete()
 
-    def updateComment(self, new_comment):
-        self.comment = new_comment
-        self.save()
+#     def updateComment(self, new_comment):
+#         self.comment = new_comment
+#         self.save()
   
-    def __str__(self):
-        return f'Comment by: {self.author}'
+#     def __str__(self):
+#         return f'Comment by: {self.author}'
 
-    @classmethod
-    def get_comments(cls,id):
-            comments = cls.objects.filter(project_id=id)
-            return comments     
+#     @classmethod
+#     def get_comments(cls,id):
+#             comments = cls.objects.filter(project_id=id)
+#             return comments     
 
 
 class Review(models.Model):
@@ -105,8 +105,13 @@ class Review(models.Model):
     def __str__(self):
         return self.comment
 
-    def save_rating(self):
+    def saveReview(self):
         self.save()
 
-    def delete_rating(self):
+    def deleteReview(self):
         self.delete()
+        
+    @classmethod
+    def getReviewId(cls, review_id):
+        review = Review.objects.filter(review_id=review_id).all()
+        return review
