@@ -1,2 +1,4 @@
 virtual
 # Mich/settings.py
+env
+.env
