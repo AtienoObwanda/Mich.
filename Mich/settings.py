@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 from unittest.mock import DEFAULT
 import environ
@@ -17,13 +17,14 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 from datetime import timedelta
+from dotenv import load_dotenv
 
 # from decouple import config,Csv
-import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 # SETTINGS_PATH = os.path.normpath(os.path.dirname(__file__))
 
@@ -107,13 +108,14 @@ WSGI_APPLICATION = 'Mich.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'tuzo',
-        'USER': 'atieno',
-        'PASSWORD': 'mishi',
-        'HOST':'localhost',
-        'PORT':''
+        'NAME': os.environ["PGDATABASE"],
+        'USER': os.environ["PGUSER"],
+        'PASSWORD': os.environ["PGPASSWORD"],
+        'HOST': os.environ["PGHOST"],
+        'PORT': os.environ["PGPORT"],
     }
 }
+
 
 
 # Password validation
